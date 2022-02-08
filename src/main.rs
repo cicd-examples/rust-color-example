@@ -1,7 +1,12 @@
+extern crate log;
+extern crate env_logger;
+
 use std::env;
+//use log::{debug, error, log_enabled, info, Level};
 use phf::phf_map;
 
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::middleware::Logger;
 use serde::Serialize;
 
 static HTML_PAGE: &str = "<!DOCTYPE html>
@@ -77,8 +82,10 @@ async fn get_color(data: web::Data<EnvColor>) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     HttpServer::new(|| {
         App::new()
+            .wrap(Logger::default())
             .data(EnvColor {
                 color: check_color().expect("Invalid Color")
             })
