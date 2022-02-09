@@ -26,12 +26,12 @@ jobs:
 
       - name: Pull Docker image
         id: docker_image_pull
-        run: docker pull cicdexamples/colorexample:${{ steps.git_commit_info.outputs.short_sha }}
+        run: docker pull cicdexamples/rustcolorexample:${{ steps.git_commit_info.outputs.short_sha }}
 
       - name: Retag the Docker image
         id: docker_image_retag
-        run: docker tag cicdexamples/colorexample:${{ steps.git_commit_info.outputs.short_sha }} cicdexamples/colorexample:${{ steps.git_commit_info.outputs.version }}
+        run: docker tag cicdexamples/rustcolorexample:${{ steps.git_commit_info.outputs.short_sha }} cicdexamples/rustcolorexample:${{ steps.git_commit_info.outputs.version }}
 
       - name: Push the Docker image
         id: docker_image_push
-        run: docker push cicdexamples/colorexample:${{ steps.git_commit_info.outputs.version }}
+        run: docker push cicdexamples/rustcolorexample:${{ steps.git_commit_info.outputs.version }}
